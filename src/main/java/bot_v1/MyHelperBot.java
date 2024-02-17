@@ -30,8 +30,17 @@ public class MyHelperBot extends TelegramLongPollingBot {
             } else if (text.equals("doge")) {
                 sendPicture(chatId, "doge.png");
                 sendPrice(chatId, "DOGE");
+            } else if (text.equals("/Buy")) {
+                sendMessage(chatId, "Ok! Input please format: 'btc 200'");
             } else {
-                sendMessage(chatId, "Unknown command!");
+                String[] tokens = text.split(" ");
+                if (tokens.length == 2) {
+                    String currency = tokens[0].toLowerCase();
+                    double amount = Double.parseDouble(tokens[1]);
+                    calculate(chatId, currency, amount);
+                } else {
+                    sendMessage(chatId, "Unknown command!");
+                }
             }
         } catch (Exception e) {
             System.out.println("Error!");
